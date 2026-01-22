@@ -5,7 +5,7 @@ break,case,const,continue,default,fallthrough, for,func, goto,if,import, else, r
 
 # Builtin functions
 
-len,print,println
+cap,len,make,print,println
 
 # built-in package
 
