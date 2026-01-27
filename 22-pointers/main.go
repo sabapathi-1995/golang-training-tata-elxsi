@@ -43,9 +43,13 @@ func main() {
 	//var ptr4 *byte =
 
 	*ptr3 = "你好，世界, How are you doing! "
+	// ，,
 
 	bytes := ([]byte)(str1) // This is the ptr inside string header
 
+	for i, v := range *ptr3 {
+		println(i, string(v))
+	}
 	ptr4 := &bytes[0]
 	fmt.Println(ptr4)
 	*ptr4 = 66
