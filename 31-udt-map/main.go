@@ -17,6 +17,20 @@ func main() {
 	fmt.Println(keys)
 	fmt.Println(values)
 
+	map1 := make(map[string]any)
+
+	map1["name"] = "Jiten"
+	map1["age"] = 41
+	map1["address"] = struct {
+		Line1   string
+		PinCode string
+		City    string
+	}{Line1: "PRRA45", PinCode: "690511", City: "Trivandrum"}
+
+	keys1, values1 := mymap(map1).GetKeysNVals()
+	fmt.Println(keys1)
+	fmt.Println(values1)
+
 }
 
 type mymap map[string]any
@@ -52,6 +66,23 @@ func (mm mymap) GetKeysNVals() ([]string, []any) {
 	}
 	return keys, values
 
+}
+
+// Do this as well
+
+func (mm mymap) RemoveDuplicatesValus() bool {
+
+	return false
+}
+
+func (mm mymap) Delete(key string) error {
+
+	return nil
+}
+
+func (mm mymap) GetValueTypes() []string {
+
+	return nil
 }
 
 // Write delete function
