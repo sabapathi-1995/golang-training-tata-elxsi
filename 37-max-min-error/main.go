@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"math/rand/v2"
+	"reflect"
 )
 
 func main() {
@@ -65,10 +66,46 @@ func GetMax(slice []int) (int, int, error) {
 	return mx, mi, nil
 }
 
+type AnyType interface{}
+
 // error , io.writer, io.reader
 
 // Make sure to return max and ensure that a and b are numbers and a and b are of same type
-func Max(a, b any) (any, error) {
+func Max(a, b AnyType) (AnyType, error) {
+	if IsNumber(a) && IsNumber(b) {
+		if AreSame(a, b) {
+			// logic here
+			switch a.(type) {
+			case uint:
+				if a.(uint) > b.(uint) {
+					return a, nil
+				} else {
+					return b, nil
+				}
+
+			case int:
+				if a.(int) > b.(int) {
+					return a, nil
+				} else {
+					return b, nil
+				}
+
+			case uint8:
+				if a.(uint8) > b.(uint8) {
+					return a, nil
+				} else {
+					return b, nil
+				}
+			}
+
+			// fill the code
+
+		} else {
+			return nil, errors.New("a and b are not  same type")
+		}
+	} else {
+		return nil, errors.New("a or b is not a number type")
+	}
 
 	return nil, nil
 }
@@ -77,5 +114,23 @@ func Max(a, b any) (any, error) {
 
 func Min(a, b any) (any, error) {
 
+	// implement as above
 	return nil, nil
 }
+
+func IsNumber(val any) bool {
+	switch val.(type) {
+	case int, uint, uint8, uint16, uint32, uint64, int8, int16, int32, int64, float32, float64:
+		return true
+	default:
+		return false
+	}
+}
+
+func AreSame(a, b any) bool {
+	return reflect.TypeOf(a) == reflect.TypeOf(b)
+}
+
+// > <
+// on what data types the comparison operations work
+// its on numbers
