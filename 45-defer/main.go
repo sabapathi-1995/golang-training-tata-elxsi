@@ -5,16 +5,18 @@ import (
 )
 
 func main() {
-	var fibs []int
+	var fibSlice []int
 	println("Hello another main")
 
 	defer fmt.Println("End of main") // deferred to be executed to the end of the caller
 
-	defer fmt.Println(fibs)
+	defer fmt.Println(fibSlice)  // Why did not
+	defer fmt.Println(&fibSlice) // Why did
+	defer PrintSlice(&fibSlice)  // Why did
 
-	defer func(fibs []int) {
-		fibs = fibo(10)
-	}(fibs)
+	defer func() {
+		fibSlice = fibo(10)
+	}()
 
 	func() { // func1
 		defer func() { // func1.1
@@ -35,6 +37,13 @@ func fibo(num uint) []int {
 		a, b = b, a+b
 	}
 	return fib
+}
+
+func PrintSlice(slice *[]int) {
+	for _, v := range *slice {
+		print(v, " ")
+	}
+	println()
 }
 
 // defer defers the execution of the function/method
