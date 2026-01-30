@@ -9,27 +9,36 @@ func main() {
 	println("start of main")
 	defer println("End of main")
 
-	/*
+	func() {
+		defer func() {
+			if v := recover(); v != nil { // if v is nil when there is no panic
+				fmt.Println("revocered from panic", v)
+			}
+		}()
+
 		// uncomment to check divide by zero panic
-			num := 100
-			 for i := 10; i >= 0; i-- {
-				println(num / i) // at some point of time , i become zero and it would be divid by aero error which is a runtime panic
-			}*/
+		num := 100
+		for i := 10; i >= 0; i-- {
+			println(num / i) // at some point of time , i become zero and it would be divid by aero error which is a runtime panic
+		}
+	}()
 	// panic: runtime error: integer divide by zero
 
-	/*
-			//uncomment to check divide by zero panic
+	func() {
+		defer RecoverIt()
+		//uncomment to check divide by zero panic
 		arr := [5]int{10, 11, 12, 13, 14}
 
 		for i := 0; i <= len(arr); i++ {
 			println(arr[i])
 		}
-	*/
+	}()
 
 	// panic: runtime error: index out of range [5] with length 5
 
-	/*
-				//uncomment to check divide by zero panic
+	func() {
+		defer RecoverIt()
+		//uncomment to check divide by zero panic
 		var ptr *int
 
 		*ptr = 100 // there is a panic bvz it is nil pointer dereference
@@ -38,7 +47,7 @@ func main() {
 
 		// panic: runtime error: invalid memory address or nil pointer dereference
 		// [signal SIGSEGV: segmentation violation code=0x2 addr=0x0 pc=0x100af1690]
-	*/
+	}()
 	func() { // func1
 		println(" This is before panic in func1")
 		defer println("End of func1")
@@ -55,22 +64,29 @@ func main() {
 }
 
 func PrintEven() {
+	defer RecoverIt()
 	for i := 1; ; i++ {
 		r := rand.IntN(1000)
 		if r%2 == 0 {
 			println(r)
 			if r%9 == 0 {
-				panic(fmt.Sprintf("The value %d is divisible by 9 so simply panicking it", r))
+				panic(fmt.Sprintf("The value %d is divide by 9 so simply panicking it", r))
 			}
 		}
-
 	}
+}
 
+func RecoverIt() {
+	if v := recover(); v != nil { // if v is nil when there is no panic
+		fmt.Println("revocered from panic", v)
+	}
 }
 
 // What is panic --> The call cannot be executed or continued to execute so it panics and crashes the application
 // runtime panic and userdefined panics
 // panics panics the whole call stack
 // panic panics the whole call stack but looks for deffered functions beofre stacked in the entire call stack ..
+// recover is a built in function
+// in the caller , if there is any panic , the defer is called --> inside defer , can use recover function..
 
 // error --> panic --> fatal
