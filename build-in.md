@@ -1,7 +1,7 @@
 
 # Keywords 
 
-break,case,const,continue,default,defer,fallthrough, for,func, goto,if,import,interface, else, map,range, return,package,struct,switch,type,var (22/25)
+break,case,const,continue,default,defer,fallthrough, for,func,go, goto,if,import,interface, else, map,range, return,package,struct,switch,type,var (23/25)
 
 # Builtin functions
 
