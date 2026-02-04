@@ -63,7 +63,7 @@ func FanOut(inCh <-chan string, outChs ...chan<- string) {
 			wg.Add(1)
 			go func(data string) {
 				for i, ch := range outChs {
-					ch <- fmt.Sprint("FanOut-", i, "---->", data)
+					ch <- fmt.Sprint("FanOut-", i, " ---->", data)
 				}
 				wg.Done()
 			}(v)
