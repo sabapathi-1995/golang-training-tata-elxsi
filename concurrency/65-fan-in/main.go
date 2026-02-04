@@ -69,3 +69,9 @@ func FanIn(chs ...chan string) chan string {
 }
 
 // FanIn --> Data comes thru many channels combined and processed is calleed as FanIn
+
+// Take 3 files  data1.txt, data2.txt,data3.txt
+// write a goroutine to read data from a file , use generator pattern, each time you read file , return a line from the functon
+// ch:=make(chan string) ,
+// Use fan in pattern to accept the file and convert it to Upper case and send thru the out channel
+// there would be a receiver that receives the data from the outchannel and write it a combined-data.txt file
