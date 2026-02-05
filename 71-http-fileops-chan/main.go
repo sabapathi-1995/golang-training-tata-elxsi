@@ -1,13 +1,35 @@
 package main
 
 import (
+	"demo/fileops"
 	"demo/handlers"
+	"flag"
 	"log/slog"
 	"net/http"
+	"os"
 	"runtime"
 )
 
+var (
+	PORT string
+)
+
+func init() {
+
+	PORT = os.Getenv("APP_PORT")
+	// if PORT == "" {
+	// 	PORT = "8083"
+	// }
+}
+
 func main() {
+
+	//args := os.Args
+
+	if PORT == "" {
+		flag.StringVar(&PORT, "port", "8083", "provide the port. If port is not envirement and not given thru options , it takes the default port")
+		flag.Parse()
+	}
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Hello World!"))
@@ -22,11 +44,13 @@ func main() {
 
 	userhandler := handlers.NewUserHandler("users.txt")
 
+	fileops.Init(userhandler.GetFileName())
+
 	http.HandleFunc("/user", userhandler.CreateUser) // create user
 
-	slog.Info("The application is listening on port 8083")
-	if err := http.ListenAndServe("0.0.0.0:8083", nil); err != nil {
-		slog.Info("Application has returned error", err)
+	slog.Info("The application is listening on port:" + PORT)
+	if err := http.ListenAndServe("0.0.0.0:"+PORT, nil); err != nil {
+		slog.Error(err.Error())
 		runtime.Goexit()
 	}
 

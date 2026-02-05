@@ -11,12 +11,22 @@ import (
 	"time"
 )
 
+type IUser interface {
+	CreateUser(w http.ResponseWriter, r *http.Request)
+	GetFileName() string
+	//GetUsers(w http.ResponseWriter, r *http.Request)
+}
+
 type UserHandler struct {
 	FileName string
 }
 
-func NewUserHandler(fileName string) *UserHandler {
+func NewUserHandler(fileName string) IUser {
 	return &UserHandler{FileName: fileName}
+}
+
+func (uh *UserHandler) GetFileName() string {
+	return uh.FileName
 }
 
 func (uh *UserHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
@@ -59,7 +69,8 @@ func (uh *UserHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	} else {
 
-		err := fileops.SaveToFile(uh.FileName, bytes)
+		//	err := fileops.SaveToFile(uh.FileName, bytes)
+		fileops.ChanData <- bytes // sending data to channel
 
 		if err != nil {
 			slog.Error(err.Error())
