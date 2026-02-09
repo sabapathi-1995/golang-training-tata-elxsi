@@ -22,7 +22,7 @@ retry:
 		if count == Retries {
 			return db, err
 		}
-		slog.Error(err.Error(), "--> retrying it for the ", count, "time")
+		slog.Error(err.Error(), "--> retrying it for the ", count)
 		time.Sleep(RETRY_DURATION)
 		count++
 		goto retry
