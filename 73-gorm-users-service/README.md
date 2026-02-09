@@ -67,3 +67,12 @@ Every request that hits the router, it should be saved in a file in json format
     "req_data":{},
     "headers":{}
 }
+
+// Create a new model for the product 
+id, name, type, price, make, model 
+
+You need to fill the actual create handler func
+
+create all crud operations for user and also product 
+GetuserByID, GetUserByUserName, UpdateUser, DeleteUser 
+GetProductByID,GetProductByType,UpdateProduct,DeleteProduct,GetAllProducts
