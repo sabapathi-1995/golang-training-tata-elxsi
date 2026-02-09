@@ -7,6 +7,7 @@ import (
 	"runtime"
 	"user-service/database"
 	"user-service/handlers"
+	"user-service/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -59,6 +60,13 @@ func main() {
 
 	userRouter.POST("/user", userHandler.Create)
 	userRouter.POST("/user/login", userHandler.Login)
+
+	privateRouter := router.Group("/v1/private", middleware.JWTAuth(jwtSecret)) // If I want to use any kind of private uri, it has to be authorized with the token
+
+	productHandler := handlers.NewProductHandler(jwtSecret)
+	privateRouter.POST("/product", func(ctx *gin.Context) {
+
+	}, productHandler.Create)
 
 	slog.Info("The application is listening on port:" + PORT)
 	if err := router.Run("0.0.0.0:" + PORT); err != nil {

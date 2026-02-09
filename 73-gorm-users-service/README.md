@@ -28,3 +28,33 @@ docker ps
 - give email and password
 - if user logs int reponse as user successfully login
 
+## JSON Webtoken
+
+HEADER.PAYLOAD.SIGNATURE
+
+- Header 
+
+
+```json
+{
+"alg":"HS256", 
+"typ":"JWT"
+}
+```
+- There few other alg: RS256,ES256
+
+- PAYLOAD
+
+```json
+{
+"sub":"HS256",
+"name":"Jiten",
+"role":"admin",
+"email":"jitenp@outlook.com"
+}
+```
+
+- SIGNATURE
+
+- HMACSHA256(base64UrlEncode(header)+"."+base64UrlEncode(payload)),secret
+
