@@ -76,3 +76,8 @@ You need to fill the actual create handler func
 create all crud operations for user and also product 
 GetuserByID, GetUserByUserName, UpdateUser, DeleteUser 
 GetProductByID,GetProductByType,UpdateProduct,DeleteProduct,GetAllProducts
+
+
+- add delete and update operations 
+- delete is a delete http method 
+- update is a put http method
