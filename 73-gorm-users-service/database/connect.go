@@ -3,6 +3,7 @@ package database
 import (
 	"log/slog"
 	"time"
+	"user-service/models"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -31,3 +32,8 @@ retry:
 }
 
 //dsn := "host=localhost user=postgres password=postgres dbname=usersdb port=5432 sslmode=disable TimeZone=Asia/Shanghai"
+
+func Migrate(db *gorm.DB) error {
+	return db.AutoMigrate(&models.User{}) // &models.Product{})
+
+}

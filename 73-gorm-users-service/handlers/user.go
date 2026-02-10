@@ -11,6 +11,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type IUserHandler interface {
+	Create(ctx *gin.Context)
+	Login(ctx *gin.Context)
+	GetAll(ctx *gin.Context)
+	GetAllByLimit(ctx *gin.Context)
+}
+
 type UserHandler struct {
 	UsersDB   *database.UserDB
 	JWTSecret string

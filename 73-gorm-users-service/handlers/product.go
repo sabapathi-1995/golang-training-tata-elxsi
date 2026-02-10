@@ -6,6 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type IProduct interface {
+	Create(ctx *gin.Context)
+}
+
 type ProductHandler struct {
 	// UsersDB   *database.UserDB
 	JWTSecret string

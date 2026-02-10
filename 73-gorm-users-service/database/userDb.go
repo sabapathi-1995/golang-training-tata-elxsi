@@ -23,10 +23,10 @@ func NewUserDB(db *gorm.DB) *UserDB {
 }
 
 func (u *UserDB) Create(user *models.User) (*models.User, error) {
-	err := u.DB.AutoMigrate(models.User{}) // It creates a table in the database
-	if err != nil {
-		return nil, err
-	}
+	// err := u.DB.AutoMigrate(models.User{}) // It creates a table in the database
+	// if err != nil {
+	// 	return nil, err
+	// }
 	//luser, err := u.GetUserByEmail(user.Email)
 
 	tx := u.DB.Create(user)

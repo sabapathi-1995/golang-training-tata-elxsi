@@ -51,6 +51,11 @@ func main() {
 		panic(err.Error())
 	}
 
+	err = database.Migrate(db)
+	if err != nil {
+		panic(err.Error())
+	}
+
 	jwtSecret := "my_jwt_secret"
 
 	userDB := database.NewUserDB(db)
