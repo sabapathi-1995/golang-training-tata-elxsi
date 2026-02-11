@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package notes.v1;
+
+option go_package = "github.com/jitenpalaparthi/go-grpc-postgres-notes-protoc-server/gen/api/notes/v1;notesv1";
+
+service NotesService {
+  rpc CreateNote(CreateNoteRequest) returns (CreateNoteResponse);
+  rpc ListNotes(ListNotesRequest) returns (stream Note);
+  rpc UploadNotes(stream CreateNoteRequest) returns (UploadNotesResponse); // client side stream
+  rpc ChatNotes(stream CreateNoteRequest) returns (stream Ack); // duplex message
+  rpc GenerateData(EmptyRequest)returns(stream GenerateResponse); // serverside streaming or SSE kind of
+}
+
+message CreateNoteRequest {
+  string title = 1;
+  string body  = 2;
+}
+
+message CreateNoteResponse {
+  Note note = 1;
+}
+
+message ListNotesRequest {}
+
+message EmptyRequest {}
+
+message GenerateResponse {
+  int64 gen=1;
+}
+
+message UploadNotesResponse {
+  int32 created = 1;
+}
+
+message Note {
+  string id = 1;
+  string title = 2;
+  string body = 3;
+  string created_at = 4; // RFC3339 UTC
+}
+
+message Ack {
+  string message = 1;
+}

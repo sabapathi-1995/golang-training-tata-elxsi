@@ -38,7 +38,8 @@ import (
 var containerMap map[string]string
 
 func init() {
-	containerMap = make(map[string]string)
+	containerMap = make(map[string]string) // just to store the ids in the map for understanding .. here in this context there is no need of map
+	// there is only one container that is postgres
 }
 func startPostgressContainer() (string, func() error, error) {
 	// docker run -d --name pg -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=usersdb postgres:16
@@ -84,11 +85,12 @@ func TestUsersCRUD_Integration(t *testing.T) {
 
 	//db, err := gorm.Open(postgres.Open("host=localhost user=postgres password=postgres dbname=usersdb port=5432 sslmode=disable TimeZone=Asia/Shanghai"), &gorm.Config{})
 
-	_, rm, err := startPostgressContainer()
+	_, rmContainer, err := startPostgressContainer()
 	require.NoError(t, err)
-	defer func() {
-		rm()
-	}()
+	// defer func() {
+	// 	rmContainer()
+	// }()
+	defer rmContainer()
 
 	dsn := `host=localhost user=postgres password=postgres dbname=usersdb port=5432 sslmode=disable TimeZone=Asia/Shanghai`
 

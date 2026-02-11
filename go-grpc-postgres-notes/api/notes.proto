@@ -1,0 +1,36 @@
+syntax = "proto3";
+package notes.v1;
+option go_package = "go-grpc-postgres-notes/internal/api;api";
+
+service NotesService {
+  rpc CreateNote(CreateNoteRequest) returns (CreateNoteResponse);
+  rpc ListNotes(ListNotesRequest) returns (stream Note);
+  rpc UploadNotes(stream CreateNoteRequest) returns (UploadNotesResponse);
+  rpc ChatNotes(stream CreateNoteRequest) returns (stream Ack);
+}
+
+message CreateNoteRequest {
+  string title = 1;
+  string body  = 2;
+}
+
+message CreateNoteResponse {
+  Note note = 1;
+}
+
+message ListNotesRequest {}
+
+message UploadNotesResponse {
+  int32 created = 1;
+}
+
+message Note {
+  string id = 1;
+  string title = 2;
+  string body = 3;
+  string created_at = 4;
+}
+
+message Ack {
+  string message = 1;
+}
